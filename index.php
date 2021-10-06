@@ -22,23 +22,59 @@
 	# Tester si une variable GET 'action' est précisée dans l'URL index.php?action=...
 	$action = (isset($_GET['action'])) ? htmlentities($_GET['action']) : 'default';
 	# Quelle action est demandée ?
-	switch($action) {
+/**
+ * @return GenesisController
+ */
+function RefGenesisController()
+{
+    require_once('controllers/GenesisController.php');
+    $controller = new GenesisController();
+    return $controller;
+}
+
+/**
+ * @return BooksController
+ */
+function RefBookController()
+{
+    require_once('controllers/BooksController.php');
+    $controller = new BooksController();
+    return $controller;
+}
+
+/**
+ * @return ContactController
+ */
+function RefContactController()
+{
+    require_once('controllers/ContactController.php');
+    $controller = new ContactController();
+    return $controller;
+}
+
+/**
+ * @return HomeController
+ */
+function RefHomeController()
+{
+    require_once('controllers/HomeController.php');
+    $controller = new HomeController();
+    return $controller;
+}
+
+switch($action) {
 		case 'genesis':
-			require_once('controllers/GenesisController.php');
-			$controller = new GenesisController();
-			break;
+			$controller = RefGenesisController();
+            break;
 		case 'books':
-			require_once('controllers/BooksController.php');
-			$controller = new BooksController();
-			break;
+			$controller = RefBookController();
+            break;
 		case 'contact':
-			require_once('controllers/ContactController.php');	
-			$controller = new ContactController();
-			break;	
+			$controller = RefContactController();
+            break;
 		default: # Par défaut, le contrôleur de l'accueil est sélectionné
-			require_once('controllers/HomeController.php');
-			$controller = new HomeController();
-			break;
+			$controller = RefHomeController();
+            break;
 	}
 	# Exécution du contrôleur correspondant à l'action demandée
 	$controller->run();
